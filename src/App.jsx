@@ -1,34 +1,49 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import './App.css'
+import { rquestToGroq } from './utils/groq'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState("")
+
+  const aisubmit = async () => {
+    const ai = await rquestToGroq(content.value)
+    setData(ai)
+ 
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main className="flex flex-col min-h-[80vh] justify-center items-center max-w-xl w-full mx-auto">
+      <div className="text-indigo-500 font-semibold text-4xl">
+        <header>
+          <h1>ADI AI</h1>
+        </header>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="text-indigo-500 text-lg">
+        <p>Hi I'm ADI, let's explore the world together </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <form className="">
+        <input className=" bg-slate-500 px-2 py-1 rounded-md text-white outline-white"
+        id='content'
+        type='text'
+        
+        
+        />
+        <button className="bg-indigo-500 text-white py-1 font-bold px-2 rounded-md"
+        onClick={aisubmit}
+        type='button'
+         >search</button>
+      </form>
+      <div className="max-w-xl" >
+        {data ?
+          <SyntaxHighlighter language="swift" style={darcula} wrapLongLines={true}>{data}</SyntaxHighlighter>
+          : null
+        }
+      </div>
+    </main>
   )
 }
 
